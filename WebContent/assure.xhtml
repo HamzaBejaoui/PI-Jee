@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Ins�rer le titre ici</title>
+    </h:head>
+    <h:body>
+    
+		<p:tabMenu activeIndex="#{param.i}">
+		    <p:menuitem value="Assurè" outcome="assure" icon="ui-icon-star">
+		        <f:param name="i" value="0" />
+		    </p:menuitem>
+		    <p:menuitem value="Pièce" outcome="piece" icon="ui-icon-search">
+		        <f:param name="i" value="1" />
+		    </p:menuitem>
+		    <p:menuitem value="Ajouter assuè" outcome="ajoutUser" icon="ui-icon-document">
+		        <f:param name="i" value="2" />
+		    </p:menuitem>
+		    <p:menuitem value="Vèhicule" outcome="vehicule" icon="ui-icon-wrench">
+		        <f:param name="i" value="3" />
+		    </p:menuitem>
+		</p:tabMenu>
+		
+    
+    <h:form id="form">
+   <p:growl id="msgs" showDetail="true"/>
+ 
+   <p:dataTable id="cars1" var="assure" value="#{assureManage.assures}" editable="true" style="margin-bottom:20px">
+       <f:facet name="header">
+           Row Editing
+       </f:facet>
+ 
+       <p:ajax event="rowEdit" listener="#{assureManage.onRowEdit}" update=":form:msgs" />
+       <p:ajax event="rowEditCancel" listener="#{assureManage.onRowCancel}" update=":form:msgs" />
+ 
+       <p:column headerText="CIN">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{assure.cin}" /></f:facet>
+               <f:facet name="input"><p:inputText id="modelInput" value="#{assure.cin}" style="width:100%"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column headerText="Nom">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{assure.nomPrenom_Nom}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{assure.nomPrenom_Nom}" style="width:100%" label="Year"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column headerText="Prenom">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{assure.nomPrenom_Prenom}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{assure.nomPrenom_Prenom}" style="width:100%" label="Year"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column headerText="Fonction">
+            <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{assure.fonction}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{assure.fonction}" style="width:100%" label="Year"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column style="width:32px">
+           <p:rowEditor />
+       </p:column>
+       <p:column style="width:75px">
+           		 <h:commandLink value="supprimer"  action="#{assureManage.delete}" >  
+           		  	<f:param name="cin" value="#{assure.cin}"  />  
+           		 </h:commandLink>
+       		</p:column>
+   </p:dataTable>
+ 
+</h:form>
+        
+    </h:body>
+</html>

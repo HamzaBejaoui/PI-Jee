@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Ins�rer le titre ici</title>
+    </h:head>
+    <h:body>
+    
+    	<p:tabMenu activeIndex="#{param.i}">
+		    <p:menuitem value="Assurè" outcome="assure" icon="ui-icon-star">
+		        <f:param name="i" value="0" />
+		    </p:menuitem>
+		    <p:menuitem value="Pièce" outcome="piece" icon="ui-icon-search">
+		        <f:param name="i" value="1" />
+		    </p:menuitem>
+		    <p:menuitem value="Ajouter assuè" outcome="ajoutUser" icon="ui-icon-document">
+		        <f:param name="i" value="2" />
+		    </p:menuitem>
+		    <p:menuitem value="Vèhicule" outcome="vehicule" icon="ui-icon-wrench">
+		        <f:param name="i" value="3" />
+		    </p:menuitem>
+		</p:tabMenu>
+    	
+        <h:form>
+        <h:panelGrid id="grid1" columns="3" cellpadding="5">
+			<p:outputLabel for="des" value="Designation " />
+    	   	<p:inputText id="des" value="#{pieceManage.designation}" /> <br/>
+    	   	<p:outputLabel for="ref" value="Reference " />
+    	   	<p:inputText id="ref" value="#{pieceManage.reference}" /> <br/>
+    	   	<p:outputLabel for="desc" value="Description " />
+    	   	<p:inputTextarea id="desc" rows="5" cols="30" value="#{pieceManage.description}" /><br/>
+    	   	<p:commandButton value="Ajouter" action="#{pieceManage.add}" />
+    	   	</h:panelGrid>
+		</h:form> <br/>
+		
+		<h:form id="form">
+    	<p:growl id="msgs" showDetail="true"/>
+     	<p:dataTable  value="#{pieceManage.pList}" var="piece"  editable="true" style="margin-bottom:20px">
+	     	<f:facet name="header">
+	           Pièces
+	       </f:facet>
+	       <p:ajax event="rowEdit" listener="#{pieceManage.onRowEdit}" update=":form:msgs" />
+       	   <p:ajax event="rowEditCancel" listener="#{pieceManage.onRowCancel}" update=":form:msgs" />
+       		<p:column headerText="Reference">
+       			<p:cellEditor>
+               		<f:facet name="output"><h:outputText value="#{piece.reference}" /></f:facet>
+               		<f:facet name="input"><p:inputText id="modelInput" value="#{piece.reference}" style="width:100%"/></f:facet>
+           		</p:cellEditor>
+       		</p:column>
+       		<p:column headerText="Designation">
+       			<p:cellEditor>
+               		<f:facet name="output"><h:outputText value="#{piece.designation}" /></f:facet>
+               		<f:facet name="input"><p:inputText value="#{piece.designation}" style="width:100%"/></f:facet>
+           		</p:cellEditor>
+       		</p:column>
+       		<p:column style="width:32px">
+           		<p:rowEditor />
+       		</p:column>
+       		<p:column style="width:75px">
+           		 <h:commandLink value="supprimer"  action="#{pieceManage.delete}" >  
+           		  	<f:param name="idPiece" value="#{piece.idPiece}"  />  
+           		 </h:commandLink>
+       		</p:column>
+       </p:dataTable> <br/>
+       </h:form>
+       
+    </h:body>
+</html>

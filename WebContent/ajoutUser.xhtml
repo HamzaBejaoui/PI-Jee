@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Ins�rer le titre ici</title>
+    </h:head>
+    <h:body>
+    	
+    	<p:tabMenu activeIndex="#{param.i}">
+		    <p:menuitem value="Assurè" outcome="assure" icon="ui-icon-star">
+		        <f:param name="i" value="0" />
+		    </p:menuitem>
+		    <p:menuitem value="Pièce" outcome="piece" icon="ui-icon-search">
+		        <f:param name="i" value="1" />
+		    </p:menuitem>
+		    <p:menuitem value="Ajouter assuè" outcome="ajoutUser" icon="ui-icon-document">
+		        <f:param name="i" value="2" />
+		    </p:menuitem>
+		    <p:menuitem value="Vèhicule" outcome="vehicule" icon="ui-icon-wrench">
+		        <f:param name="i" value="3" />
+		    </p:menuitem>
+		</p:tabMenu>
+    
+        <h:form>
+        <h:panelGrid id="grid1" columns="3" cellpadding="5">
+			<p:outputLabel for="cin" value="CIN " />
+    	   	<p:inputText id="cin" value="#{addUserBean.cin}" required="true" /> <br/>
+    	   	<p:outputLabel for="nom" value="Nom " />
+    	   	<p:inputText id="nom" value="#{addUserBean.nom}" /> <br/>
+    	   	<p:outputLabel for="prenom" value="Prenom " />
+    	   	<p:inputText id="prenom" value="#{addUserBean.prenom}" /> <br/>
+    	   	<p:outputLabel for="fonction" value="Fonction " />
+    	   	<p:inputText id="fonction" value="#{addUserBean.fonction}" /> <br/>
+    	   	<p:commandButton value="Ajouter" action="#{addUserBean.add}" />
+    	   	</h:panelGrid>
+		</h:form> <br/>
+        
+    </h:body>
+</html>

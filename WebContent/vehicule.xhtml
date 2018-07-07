@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Ins�rer le titre ici</title>
+    </h:head>
+    <h:body>
+    
+    	<p:tabMenu activeIndex="#{param.i}">
+		    <p:menuitem value="Assurè" outcome="assure" icon="ui-icon-star">
+		        <f:param name="i" value="0" />
+		    </p:menuitem>
+		    <p:menuitem value="Pièce" outcome="piece" icon="ui-icon-search">
+		        <f:param name="i" value="1" />
+		    </p:menuitem>
+		    <p:menuitem value="Ajouter assuè" outcome="ajoutUser" icon="ui-icon-document">
+		        <f:param name="i" value="2" />
+		    </p:menuitem>
+		    <p:menuitem value="Vèhicule" outcome="vehicule" icon="ui-icon-wrench">
+		        <f:param name="i" value="3" />
+		    </p:menuitem>
+		</p:tabMenu>
+    	
+        
+        <h:form id="form">
+    <p:dataGrid var="car" value="#{vehiculeManage.cars}" columns="3" layout="grid"
+        rows="12" paginator="true" id="cars"
+        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+        rowsPerPageTemplate="6,12,16">
+ 
+        <f:facet name="header">
+            Vèhicules
+        </f:facet>
+ 
+        <p:panel header="#{car.matricule}" style="text-align:center">
+            <h:panelGrid columns="1" style="width:100%">
+ 
+                <h:outputText value="#{car.gamme}" />
+                <h:outputText value="#{car.marque}" />
+ 
+                <p:commandLink update=":form:carDetail" oncomplete="PF('carDialog').show()" title="View Detail">
+                    <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
+                    <f:setPropertyActionListener value="#{car}" target="#{vehiculeManage.selectedCar}" />
+                </p:commandLink>
+            </h:panelGrid>
+        </p:panel>
+ 
+    </p:dataGrid>
+ 
+    <p:dialog header="Vehicule detail" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="carDetail" style="text-align:center;">
+            <p:panelGrid  columns="2" rendered="#{not empty vehiculeManage.selectedCar}" columnClasses="label,value">
+ 
+                <h:outputText value="Gamme:" />
+                <h:outputText value="#{vehiculeManage.selectedCar.gamme}" />
+ 
+                <h:outputText value="Marque" />
+                <h:outputText value="#{vehiculeManage.selectedCar.marque}" />
+ 
+                <h:outputText value="Num de chassie:" />
+                <h:outputText value="#{vehiculeManage.selectedCar.numChassie}" />
+ 
+                <h:outputText value="Puissance fiscale" />
+                <h:outputText value="#{vehiculeManage.selectedCar.puissanceFiscale}" />
+            </p:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
+</h:form>
+        
+    </h:body>
+</html>
